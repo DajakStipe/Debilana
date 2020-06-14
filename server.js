@@ -12,6 +12,7 @@ connectDB();
 
 // Route Files -- importing the file
 const bootcamps = require('./routes/bootcamps');
+const courses = require('./routes/courses');
 const app = express();
 
 // Body Parser - so we dont get undefined
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount routers -- define the route from the file
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses);
 
 // Error handler init
 app.use(errorHandler);
