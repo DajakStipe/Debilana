@@ -121,7 +121,7 @@ BootcampSchema.pre('save', async function (next) {
     zipcode: loc[0].zipcode,
     country: loc[0].countryCode
   };
-  // Do not save address in db
+  // Do not save address in db test
   this.address = undefined;
   next();
 });
