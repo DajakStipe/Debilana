@@ -3,6 +3,8 @@ const path = require('path');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
+const helmet = require('helmet');
+const xss = require('xss-clean');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 
@@ -39,6 +41,12 @@ app.use(fileupload());
 
 // sanitize data
 app.use(mongoSanitize());
+
+// set security headers
+app.use(helmet());
+
+// prevent xss attacks
+app.use(xss());
 
 // set static folder for photo
 app.use(express.static(path.join(__dirname, 'public')));
