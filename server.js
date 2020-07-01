@@ -7,9 +7,9 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
+const cors = require('cors');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
-
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -59,6 +59,9 @@ app.use(limiter);
 
 // prevent http param pollution
 app.use(hpp());
+
+// enable cors
+app.use(cors());
 
 // set static folder for photo
 app.use(express.static(path.join(__dirname, 'public')));
