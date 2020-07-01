@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
 const helmet = require('helmet');
+const hpp = require('hpp');
+const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
@@ -47,6 +49,16 @@ app.use(helmet());
 
 // prevent xss attacks
 app.use(xss());
+
+// rate limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 min
+  max: 100
+});
+app.use(limiter);
+
+// prevent http param pollution
+app.use(hpp());
 
 // set static folder for photo
 app.use(express.static(path.join(__dirname, 'public')));
