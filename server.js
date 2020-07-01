@@ -5,9 +5,10 @@ const morgan = require('morgan');
 const colors = require('colors');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
+
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
-
+const mongoSanitize = require('express-mongo-sanitize');
 // load ENV VARS
 dotenv.config({ path: './config/config.env' });
 // connect to database
@@ -35,6 +36,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // fileuploading
 app.use(fileupload());
+
+// sanitize data
+app.use(mongoSanitize());
 
 // set static folder for photo
 app.use(express.static(path.join(__dirname, 'public')));
